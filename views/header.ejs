@@ -1,0 +1,41 @@
+<div >
+  <% if (!user) { %>
+    <nav>
+      <a href="/contact">Contact</a>
+      <a href="/about">About</a>
+      <a href="/sessions/register">Sign Up</a>
+      <a href="/sessions/logon">Sign In</a>
+    </nav>
+    <h1 >DRUM LESSONS</h1>
+
+  <% } %>
+  <% if (user) { %>
+    <nav>
+      <a href="/contact">Contact</a>
+      <a href="/about">About</a>
+      <form method="POST" action="/sessions/logoff">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+        <button>Logoff</button>
+      </form>
+    </nav>
+
+      <h1 class="content">DRUM LESSONS</h1>
+
+    <p>Hello, <%= user.name %> !</p>
+
+  <% } %>
+  <% if (errors) {
+      errors.forEach((err) => { %>
+        <div class="error">
+          Error: <%= err %>
+        </div>
+      <% })
+    } %>
+  <% if (info) {
+      info.forEach((msg) => { %>
+        <div class="info">
+          Info: <%= msg %>
+        </div>
+      <% })
+    } %>
+</div>

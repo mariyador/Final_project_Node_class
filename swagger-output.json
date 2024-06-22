@@ -1,0 +1,224 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "title": "Students API for EgorD",
+      "description": "Drum lessons info",
+      "version": "1.0.0"
+    },
+    "host": "students-api-doron.onrender.com",
+    "basePath": "/api/v1",
+    "schemes": ["https"],
+    "securityDefinitions": {
+      "Bearer": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "Enter your bearer token in the format **Bearer &lt;token&gt;**"
+      }
+    },
+    "paths": {
+      "/auth/register": {
+        "post": {
+          "description": "Register a new user",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Mariya"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "example@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password123"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "User successfully registered"
+            },
+            "400": {
+              "description": "Invalid input"
+            }
+          }
+        }
+      },
+      "/auth/login": {
+        "post": {
+          "description": "Login a user",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "required": true,
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "example@example.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password123"
+                  }
+                }
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "User successfully logged in"
+            },
+            "401": {
+              "description": "Unauthorized"
+            }
+          }
+        }
+      },
+      "/students": {
+        "security": [
+          { "Bearer": [] }
+        ],
+        "get": {
+          "description": "Get a list of students",
+          "responses": {
+            "200": {
+              "description": "List of students"
+            },
+            "401": {
+              "description": "Invalid authentication"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "post": {
+          "description": "Create a new student",
+          "parameters": [
+            {
+              "name": "body",
+              "in": "body",
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string", "maxLength": 40 },
+                  "educationLevel": { "type": "string", "enum": ["begginer", "intermediate", "advanced"] }
+                },
+                "required": ["name", "educationLeve"]
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Student successfully created"
+            },
+            "400": {
+              "description": "Invalid input"
+            },
+            "401": {
+              "description": "Invalid authentication"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      },
+      "/students/{id}": {
+        "security": [
+          { "Bearer": [] }
+        ],
+        "get": {
+          "description": "Get a student by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Student details"
+            },
+            "401": {
+              "description": "Invalid authentication"
+            },
+            "404": {
+              "description": "Student not found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "delete": {
+          "description": "Delete a student by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Student deleted"
+            },
+            "401": {
+              "description": "Invalid authentication"
+            },
+            "404": {
+              "description": "Student not found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        },
+        "patch": {
+          "description": "Update a student by ID",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Student updated"
+            },
+            "401": {
+              "description": "Invalid authentication"
+            },
+            "404": {
+              "description": "Invalid input"
+            },
+            "400": {
+              "description": "Student not found"
+            },
+            "500": {
+              "description": "Internal Server Error"
+            }
+          }
+        }
+      }
+    }
+  }

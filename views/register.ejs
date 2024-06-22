@@ -1,0 +1,72 @@
+<%- include("head.ejs") %>
+<%- include("header.ejs") %>
+
+<style>
+
+  form {
+    background-color: rgba(0, 0, 0, 0.8); 
+    padding: 20px;
+    border-radius: 10px; 
+    width: 300px;
+    margin: 0 auto;
+  }
+
+  label {
+    display: block; 
+    margin-bottom: 10px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  button[type="submit"],
+  button[type="button"] {
+    width: 100%;
+    padding: 10px; 
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+
+  button[type="submit"],
+  button[type="button"] {
+    background-color: #333; /* Цвет фона кнопок */
+    color: white; /* Цвет текста на кнопках */
+    border: none; /* Убираем границу у кнопок */
+    padding: 10px 20px; /* Отступы в кнопках */
+    cursor: pointer; /* Изменение курсора при наведении */
+    border-radius: 5px; /* Округляем углы кнопок */
+  }
+
+  button[type="submit"]:hover,
+  button[type="button"]:hover {
+    background-color: #555; /* Цвет фона кнопок при наведении */
+  }
+</style>
+
+<form method="POST" action="/sessions/register">
+  <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+  <div>
+    <label for="name">Your name:</label>
+    <input type="text" id="name" name="name" required>
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+  </div>
+  <div>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+  </div>
+  <div>
+    <label for="password1">Confirm your password:</label>
+    <input type="password" id="password1" name="password1" required>
+  </div>
+  <div>
+    <button type="submit">Register</button>
+    <a href="/">
+      <button type="button">Cancel</button>
+    </a>
+  </div>
+</form>
+
+<%- include("footer.ejs") %>
