@@ -1,41 +1,35 @@
-<div >
+<div>
   <% if (!user) { %>
-    <nav>
-      <a href="/contact">Contact</a>
-      <a href="/about">About</a>
-      <a href="/sessions/register">Sign Up</a>
-      <a href="/sessions/logon">Sign In</a>
-    </nav>
-    <h1 >DRUM LESSONS</h1>
+  <nav>
+    <a href="/contact">Contact</a>
+    <a href="/about">About</a>
+    <a href="/sessions/register">Sign Up</a>
+    <a href="/sessions/logon">Sign In</a>
+  </nav>
+  <h1><a href="/" class="content">DRUM LESSONS</a></h1>
 
-  <% } %>
-  <% if (user) { %>
-    <nav>
-      <a href="/contact">Contact</a>
-      <a href="/about">About</a>
-      <form method="POST" action="/sessions/logoff">
-        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
-        <button>Sign Out</button>
-      </form>
-    </nav>
+  <style>
 
-    <h1><a href="/" class="content">DRUM LESSONS</a></h1>
+  </style>
 
-    <!-- <p>Hello, <%= user.name %> !</p> -->
+  <% } %> <% if (user) { %>
 
-  <% } %>
-  <% if (errors) {
-      errors.forEach((err) => { %>
-        <div class="error">
-          Error: <%= err %>
-        </div>
-      <% })
-    } %>
-  <% if (info) {
-      info.forEach((msg) => { %>
-        <div class="info">
-          Info: <%= msg %>
-        </div>
-      <% })
-    } %>
+  <nav>
+    <a href="/contact">Contact</a>
+    <a href="/about">About</a>
+    <form method="POST" action="/sessions/logoff">
+      <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+      <button>Sign Out</button>
+    </form>
+  </nav>
+
+  <h1><a href="/" class="content">DRUM LESSONS</a></h1>
+
+  <!-- <p>Hello, <%= user.name %> !</p> -->
+
+  <% } %> <% if (errors) { errors.forEach((err) => { %>
+  <div class="error">Error: <%= err %></div>
+  <% }) } %> <% if (info) { info.forEach((msg) => { %>
+  <div class="info">Info: <%= msg %></div>
+  <% }) } %>
 </div>

@@ -5,6 +5,7 @@ const handleErrors = require("../utils/parseErrors");
 const getStudents = async (req, res, next) => {
     try {
         const students = await Student.find({ createdBy: req.user._id });
+        students.sort((a, b) => a.age - b.age);
         res.render('students', { students });
     } catch (error) {
         handleErrors(error, req, res);

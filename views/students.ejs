@@ -2,92 +2,143 @@
 <%- include("partials/header.ejs") %>
 
 <style>
-.container {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: auto; 
-  margin-top: 20px;
-  padding-bottom: 20px; 
-}
+  .container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-top: 20px;
+    padding-bottom: 20px;
+  }
 
-.student-card {
-  width: 25%; 
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
-  padding: 10px;
-  margin-left: 10px;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  flex-shrink: 0; 
-}
+  .student-card {
+    width: 25%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex-shrink: 0;
+  }
 
-    .student-card-image {
-        width: 100%;
-        height: 300px; 
-        background-size: cover;
-        background-position: center;
-        margin-bottom: 10px; 
-    }
+  .student-card-image {
+    width: 100%;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    margin-bottom: 10px;
+  }
 
-    .student-card-info {
-        margin-bottom: 10px;
-    }
+  .student-card-info {
+    margin-bottom: 10px;
+  }
 
-    .student-card-info div {
-        margin-bottom: 5px;
-    }
+  .student-card-info div {
+    margin-bottom: 5px;
+  }
 
-    .student-card-actions {
-        margin-top: auto; /* Помещаем действия внизу блока */
-    }
+  .student-card-actions {
+    margin-top: auto;
+  }
 
-    .student-card-actions a,
-    .student-card-actions button {
-        text-decoration: none;
-        color: white;
-        padding: 8px 12px;
-        background-color: #444;
-        border: none;
-        cursor: pointer;
-        margin-top: 5px; /* Отступ между элементами */
-    }
+  .student-card-actions a,
+  .student-card-actions button {
+    text-decoration: none;
+    color: white;
+    padding: 8px 12px;
+    background-color: #444;
+    border: none;
+    cursor: pointer;
+    margin-top: 5px;
+  }
 
-    .student-card-actions button:hover {
-        background-color: #666;
-    }
-    #addButton {
-        text-align: right;
-        margin-right: 20px ;
-    }
+  .student-card-actions button:hover {
+    background-color: #666;
+  }
+
+  #addButton {
+    text-align: right;
+    margin-right: 20px;
+  }
 </style>
 
 <a href="/students/new" id="addButton">
-    <button type="button">Add a student</button>
+  <button type="button">Add a student</button>
 </a>
 
+<button id="changeSortingOrder">Change Sorting Order</button>
+
 <div class="container">
-    <% if (students && students.length) { %>
-        <% students.forEach((student) => { %>
-            <div class="student-card">
-                <div class="student-card-image" style="background-image: url('/default.jpg');"></div>
-                <div class="student-card-info">
-                    <div><strong><%= student.studentName %></strong></div>
-                    <div><%= student.age %> years old</div>
-                    <div><%= student.educationLevel === 'beginner' ? 'Beginner' : student.educationLevel === 'intermediate' ? 'Intermediate' : 'Advanced' %></div>
-                </div>
-                <div class="student-card-actions">
-                    <a href="/students/edit/<%= student.id %>">More</a>
-                    <form action="/students/delete/<%= student.id %>" method="POST">
-                        <button type="submit">Delete</button>
-                        <input type="hidden" name="_csrf" value="<%= _csrf %>" />
-                    </form>
-                </div>
-            </div>
-        <% }) %>
-    <% } else { %>
-        <p>No students found.</p>
-    <% } %>
+  <% if (students && students.length) { %>
+    <% students.forEach((student) => { %>
+      <div class="student-card">
+        <div class="student-card-image" style="background-image: url('/default.jpg')"></div>
+        <div class="student-card-info">
+          <div><strong><%= student.studentName %></strong></div>
+          <div><%= student.age %> years old</div>
+          <div>
+            <%= student.educationLevel === 'beginner' ? 'Beginner' :
+                student.educationLevel === 'intermediate' ? 'Intermediate' : 'Advanced' %>
+          </div>
+        </div>
+        <div class="student-card-actions">
+          <a href="/students/edit/<%= student.id %>">More</a>
+          <form action="/students/delete/<%= student.id %>" method="POST">
+            <button type="submit">Delete</button>
+            <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+          </form>
+        </div>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <p>No students found.</p>
+  <% } %>
 </div>
+
+<script nonce="<%= nonce %>">
+  document.addEventListener('DOMContentLoaded', function() {
+    const students = <%- JSON.stringify(students) %>;
+    const changeSortingOrderButton = document.getElementById('changeSortingOrder');
+    let ascending = true;
+
+    changeSortingOrderButton.addEventListener('click', function() {
+      ascending = !ascending;
+      students.sort((a, b) => ascending ? a.age - b.age : b.age - a.age);
+      renderStudents();
+    });
+
+    function renderStudents() {
+      const container = document.querySelector('.container');
+      container.innerHTML = '';
+
+      students.forEach((student) => {
+        const studentCard = `
+          <div class="student-card">
+            <div class="student-card-image" style="background-image: url('/default.jpg')"></div>
+            <div class="student-card-info">
+              <div><strong>${student.studentName}</strong></div>
+              <div>${student.age} years old</div>
+              <div>${student.educationLevel === 'beginner' ? 'Beginner' :
+                student.educationLevel === 'intermediate' ? 'Intermediate' : 'Advanced'}</div>
+            </div>
+            <div class="student-card-actions">
+              <a href="/students/edit/${student.id}">More</a>
+              <form action="/students/delete/${student.id}" method="POST">
+                <button type="submit">Delete</button>
+                <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+              </form>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', studentCard);
+      });
+
+      if (students.length === 0) {
+        container.innerHTML = '<p>No students found.</p>';
+      }
+    }
+  });
+</script>
 
 <%- include("partials/footer.ejs") %>
