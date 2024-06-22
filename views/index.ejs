@@ -1,16 +1,13 @@
-<%- include("head.ejs") %>
-<%- include("header.ejs") %>
+<%- include("partials/head.ejs") %>
+<%- include("partials/header.ejs") %>
 <% if (user) { %>  
     <h3>Hello, <%= user.name %> !</h3>
 
     <a href="/students" class="content">View Students</a>
 
-    <div>
-
-    </div>
 <% } else { %>
 
 
 
 <% } %>
-<%- include("footer.ejs") %>
+<%- include("partials/footer.ejs") %>
