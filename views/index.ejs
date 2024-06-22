@@ -1,9 +1,16 @@
 <%- include("head.ejs") %>
 <%- include("header.ejs") %>
 <% if (user) { %>  
-    <a href="/students">View Students</a>
+    <h3>Hello, <%= user.name %> !</h3>
+
+    <a href="/students" class="content">View Students</a>
+
+    <div>
+
+    </div>
 <% } else { %>
 
-    <>
+
+
 <% } %>
 <%- include("footer.ejs") %>

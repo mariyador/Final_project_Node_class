@@ -13,8 +13,6 @@ require("dotenv").config();
 const aboutRouter = require('./routes/aboutRouter');
 const contactRouter = require('./routes/contactRouter');
 
-
-
 const app = express();
 
 app.set("view engine", "ejs");

@@ -33,10 +33,11 @@ const StudentSchema = new mongoose.Schema({
         required: true
     },
     address: {
-        country: String,
-        city: String,
         street: String,
-        zipCode: String
+        city: String,
+        zipCode: String,
+        state: String,
+        country: String
     },
     phone: {
         type: String,
@@ -44,9 +45,7 @@ const StudentSchema = new mongoose.Schema({
     },
     socialLinks: {
         facebook: String,
-        twitter: String,
         instagram: String,
-        youtube: String
     },
     avatar: {
         type: String,

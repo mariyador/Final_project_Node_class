@@ -1,5 +1,59 @@
 <%- include("head.ejs") %>
 <%- include("header.ejs") %>
+
+<style>
+    form {
+        background-color: rgba(0, 0, 0, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        margin: 0 auto;
+        margin-top: 20px;
+        color: white;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    select,
+    button[type="submit"],
+    button[type="button"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: none;
+        border-radius: 5px;
+        color: white;
+    }
+
+    select {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    button[type="submit"],
+    button[type="button"] {
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+        border: none;
+    }
+
+    button[type="submit"]:hover,
+    button[type="button"]:hover {
+        background-color: #555;
+    }
+</style>
+
 <h2>Add a new student</h2>
 
 <form method="POST" action="/students">
