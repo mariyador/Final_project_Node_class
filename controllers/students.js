@@ -6,6 +6,10 @@ const getStudents = async (req, res, next) => {
     try {
         const students = await Student.find({ createdBy: req.user._id });
         students.sort((a, b) => a.age - b.age);
+        students.sort((a, b) => {
+            const educationLevels = ['beginner', 'intermediate', 'advanced'];
+            return educationLevels.indexOf(a.educationLevel) - educationLevels.indexOf(b.educationLevel);
+        });
         res.render('students', { students });
     } catch (error) {
         handleErrors(error, req, res);

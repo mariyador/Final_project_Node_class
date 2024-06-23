@@ -76,17 +76,24 @@
         <input type="text" id="facebook" name="socialLinks[facebook]" value="<%= student && student.socialLinks ? student.socialLinks.facebook : '' %>"/>
     </div>
     <div>
-        <label for="twitter">Twitter:</label>
-        <input type="text" id="twitter" name="socialLinks[twitter]" value="<%= student && student.socialLinks ? student.socialLinks.twitter : '' %>"/>
-    </div>
-    <div>
         <label for="instagram">Instagram:</label>
         <input type="text" id="instagram" name="socialLinks[instagram]" value="<%= student && student.socialLinks ? student.socialLinks.instagram : '' %>"/>
     </div>
+
+    <p>TYPE OF LESSON:</p>
     <div>
-        <label for="youtube">YouTube:</label>
-        <input type="text" id="youtube" name="socialLinks[youtube]" value="<%= student && student.socialLinks ? student.socialLinks.youtube : '' %>"/>
+        <label>
+            <input type="checkbox" name="typeOfLesson" value="online" <%= student && student.typeOfLesson && student.typeOfLesson === 'online' ? 'checked' : '' %>>
+            Online
+        </label>
     </div>
+    <div>
+        <label>
+            <input type="checkbox" name="typeOfLesson" value="offline" <%= student && student.typeOfLesson && student.typeOfLesson === 'offline' ? 'checked' : '' %>>
+            Offline
+        </label>
+    </div>
+
     <div>
         <button type="submit">Edit</button>
         <a href="/students">
@@ -116,7 +123,8 @@
   input[type="number"],
   select,
   button[type="submit"],
-  button[type="button"] {
+  button[type="button"],
+  input[type="checkbox"] {
     width: 100%;
     padding: 10px; 
     margin-bottom: 10px;
@@ -125,17 +133,17 @@
 
   button[type="submit"],
   button[type="button"] {
-    background-color: #333; /* Цвет фона кнопок */
-    color: white; /* Цвет текста на кнопках */
-    border: none; /* Убираем границу у кнопок */
-    padding: 10px 20px; /* Отступы в кнопках */
-    cursor: pointer; /* Изменение курсора при наведении */
-    border-radius: 5px; /* Округляем углы кнопок */
+    background-color: #333;
+    color: white; 
+    border: none;
+    padding: 10px 20px; 
+    cursor: pointer; 
+    border-radius: 5px; 
   }
 
   button[type="submit"]:hover,
   button[type="button"]:hover {
-    background-color: #555; /* Цвет фона кнопок при наведении */
+    background-color: #555; 
   }
   p {
     text-align: center;

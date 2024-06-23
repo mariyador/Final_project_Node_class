@@ -39,9 +39,9 @@ const StudentSchema = new mongoose.Schema({
         state: String,
         country: String
     },
-    phone: {
-        type: String,
-        // required: true
+    typeOfLesson: {
+        type: String,  
+        enum: ['online', 'offline'],  
     },
     socialLinks: {
         facebook: String,

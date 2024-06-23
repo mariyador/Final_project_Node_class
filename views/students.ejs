@@ -1,5 +1,4 @@
-<%- include("partials/head.ejs") %>
-<%- include("partials/header.ejs") %>
+<%- include("partials/head.ejs") %> <%- include("partials/header.ejs") %>
 
 <style>
   .container {
@@ -20,6 +19,8 @@
     flex-direction: column;
     position: relative;
     flex-shrink: 0;
+    border-radius: 10px;
+    overflow: hidden;
   }
 
   .student-card-image {
@@ -28,6 +29,7 @@
     background-size: cover;
     background-position: center;
     margin-bottom: 10px;
+    position: relative;
   }
 
   .student-card-info {
@@ -40,6 +42,12 @@
 
   .student-card-actions {
     margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
 
   .student-card-actions a,
@@ -47,10 +55,10 @@
     text-decoration: none;
     color: white;
     padding: 8px 12px;
-    background-color: #444;
-    border: none;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid black;
     cursor: pointer;
-    margin-top: 5px;
+    margin-left: 10px;
   }
 
   .student-card-actions button:hover {
@@ -58,8 +66,14 @@
   }
 
   #addButton {
+    margin-left: 20px;
+  }
+
+  .sort-dropdown {
+    margin-bottom: 10px;
     text-align: right;
     margin-right: 20px;
+    margin-top: 10px;
   }
 </style>
 
@@ -67,44 +81,75 @@
   <button type="button">Add a student</button>
 </a>
 
-<button id="changeSortingOrder">Change Sorting Order</button>
+<div class="sort-dropdown">
+  <label for="sortSelect">Sort by:</label>
+  <select id="sortSelect">
+    <option value="age">Age ▲</option>
+    <option value="age2">Age ▼</option>
+    <option value="educationLevel">Education Level ▲</option>
+    <option value="educationLevel2">Education Level ▼</option>
+  </select>
+</div>
 
 <div class="container">
-  <% if (students && students.length) { %>
-    <% students.forEach((student) => { %>
-      <div class="student-card">
-        <div class="student-card-image" style="background-image: url('/default.jpg')"></div>
-        <div class="student-card-info">
-          <div><strong><%= student.studentName %></strong></div>
-          <div><%= student.age %> years old</div>
-          <div>
-            <%= student.educationLevel === 'beginner' ? 'Beginner' :
-                student.educationLevel === 'intermediate' ? 'Intermediate' : 'Advanced' %>
-          </div>
-        </div>
-        <div class="student-card-actions">
-          <a href="/students/edit/<%= student.id %>">More</a>
-          <form action="/students/delete/<%= student.id %>" method="POST">
-            <button type="submit">Delete</button>
-            <input type="hidden" name="_csrf" value="<%= _csrf %>" />
-          </form>
-        </div>
+  <% if (students && students.length) { %> <% students.forEach((student) => { %>
+  <div class="student-card">
+    <div
+      class="student-card-image"
+      style="background-image: url('/default.jpg')"
+    >
+      <div class="student-card-actions">
+        <form action="/students/edit/<%= student.id %>" method="GET">
+          <button type="submit" class="button">More</button>
+        </form>
+        <form action="/students/delete/<%= student.id %>" method="POST">
+          <button type="submit" class="button">Delete</button>
+          <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+        </form>
       </div>
-    <% }) %>
-  <% } else { %>
-    <p>No students found.</p>
+    </div>
+    <div class="student-card-info">
+      <div style="display: flex; justify-content: space-between">
+        <div><strong><%= student.studentName %></strong></div>
+        <div><%= student.typeOfLesson %></div>
+      </div>
+      <div><%= student.age %> years old</div>
+      <div>
+        <%= student.educationLevel === 'beginner' ? 'Beginner' :
+        student.educationLevel === 'intermediate' ? 'Intermediate' : 'Advanced'
+        %>
+      </div>
+    </div>
+  </div>
+  <% }) %> <% } else { %>
+  <p>No students found.</p>
   <% } %>
 </div>
 
 <script nonce="<%= nonce %>">
   document.addEventListener('DOMContentLoaded', function() {
     const students = <%- JSON.stringify(students) %>;
-    const changeSortingOrderButton = document.getElementById('changeSortingOrder');
     let ascending = true;
 
-    changeSortingOrderButton.addEventListener('click', function() {
-      ascending = !ascending;
-      students.sort((a, b) => ascending ? a.age - b.age : b.age - a.age);
+    const sortSelect = document.getElementById('sortSelect');
+
+    sortSelect.addEventListener('change', function() {
+      const sortBy = sortSelect.value;
+
+      if (sortBy === 'age') {
+        students.sort((a, b) => ascending ? a.age - b.age : b.age - a.age);
+      } else if (sortBy === 'age2') {
+        students.sort((a, b) => ascending ? b.age - a.age : a.age - b.age);
+      } else if (sortBy === 'educationLevel') {
+        const educationLevels = ['beginner', 'intermediate', 'advanced'];
+        students.sort((a, b) => ascending ? educationLevels.indexOf(a.educationLevel) - educationLevels.indexOf(b.educationLevel) :
+          educationLevels.indexOf(b.educationLevel) - educationLevels.indexOf(a.educationLevel));
+      } else if (sortBy === 'educationLevel2') {
+        const educationLevels = ['beginner', 'intermediate', 'advanced'];
+        students.sort((a, b) => ascending ? educationLevels.indexOf(b.educationLevel) - educationLevels.indexOf(a.educationLevel) :
+          educationLevels.indexOf(a.educationLevel) - educationLevels.indexOf(b.educationLevel));
+      }
+
       renderStudents();
     });
 
@@ -115,19 +160,25 @@
       students.forEach((student) => {
         const studentCard = `
           <div class="student-card">
-            <div class="student-card-image" style="background-image: url('/default.jpg')"></div>
-            <div class="student-card-info">
-              <div><strong>${student.studentName}</strong></div>
-              <div>${student.age} years old</div>
-              <div>${student.educationLevel === 'beginner' ? 'Beginner' :
-                student.educationLevel === 'intermediate' ? 'Intermediate' : 'Advanced'}</div>
+            <div class="student-card-image" style="background-image: url('/default.jpg')">
+              <div class="student-card-actions">
+                <a href="/students/edit/${student.id}">More</a>
+                <form action="/students/delete/${student.id}" method="POST">
+                  <button type="submit">Delete</button>
+                  <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+                </form>
+              </div>
             </div>
-            <div class="student-card-actions">
-              <a href="/students/edit/${student.id}">More</a>
-              <form action="/students/delete/${student.id}" method="POST">
-                <button type="submit">Delete</button>
-                <input type="hidden" name="_csrf" value="<%= _csrf %>" />
-              </form>
+            <div class="student-card-info">
+              <div style="display: flex; justify-content: space-between;">
+                <div><strong>${student.studentName}</strong></div>
+                <div>${student.typeOfLesson}</div>
+              </div>
+              <div>${student.age} years old</div>
+              <div>
+                ${student.educationLevel === 'beginner' ? 'Beginner' :
+                    student.educationLevel === 'intermediate' ? 'Intermediate' : 'Advanced'}
+              </div>
             </div>
           </div>
         `;
