@@ -1,11 +1,73 @@
 <%- include("partials/head.ejs") %> 
 <%- include("partials/header.ejs") %> 
 
-<% if (user) { %>
-  <h2>Hello, <%= user.name %>!</h3>
-  <a href="/students" class="content">View Students</a>
-<% } else { %> 
+<style>
+  .center-content {
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: left;
+    padding: 40px;
+    font-size: 28px; 
+    border-radius: 10px;
+    width: 600px;
+    overflow: hidden;
+    position: fixed;
+    bottom: 100px;
+    left: 25%;
+    transform: translateX(-50%);
+  }
 
+  .center-content p {
+    margin-bottom: 10px;
+  }
+</style>
+
+<% if (user) { %>
+  <h2>Hello, <%= user.name %>!</h2>
+  <a href="/students" class="content">View Students</a>
+<% } else { %>   
+  <div class="center-content" id="typingEffect">
+  </div>
 <% } %> 
 
 <%- include("partials/footer.ejs") %>
+
+<script nonce="<%= nonce %>">
+  document.addEventListener('DOMContentLoaded', function() {
+    const text = [
+      "Have you always dreamed of playing on the drum set?",
+      "You've come to the right place!",
+      "I'm Egor, and I'm here to help you realize",
+      "your musical ambitions on drums.",
+    ];
+
+    const typingSpeed = 50; 
+    const delayBetweenSentences = 1000;
+
+    let index = 0;
+    let charIndex = 0;
+    let typingInterval;
+
+    function typeText() {
+      if (index < text.length) {
+        const currentText = document.getElementById('typingEffect');
+        if (currentText && charIndex <= text[index].length) {
+          const newChar = text[index].charAt(charIndex);
+          currentText.innerHTML += newChar === ' ' ? '&nbsp;' : newChar;
+          charIndex++;
+        } else {
+          charIndex = 0;
+          index++;
+          if (currentText) {
+            currentText.innerHTML += '<br>';
+          }
+          setTimeout(typeText, delayBetweenSentences);
+        }
+      } else {
+        clearInterval(typingInterval);
+      }
+    }
+
+    typingInterval = setInterval(typeText, typingSpeed);
+  });
+</script>

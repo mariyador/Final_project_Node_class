@@ -1,3 +1,123 @@
-<%- include("partials/head.ejs") %> <%- include("partials/header.ejs") %>
-<p>hello!</p>
+<%- include("partials/head.ejs") %>
+<%- include("partials/header.ejs") %>
+<style>
+    .center-content {
+        background-color: rgba(0, 0, 0, 0.8);
+        text-align: center;
+        padding: 20px;
+        font-size: 20px;
+        border-radius: 10px;
+        margin: 50px 50px;
+        color: #fff;
+        overflow-x: auto;
+    }
+
+    .center-content a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .center-content a:hover {
+        text-decoration: underline;
+    }
+
+    table {
+        margin: 0 auto;
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #fff;
+        padding: 8px;
+    }
+
+    th {
+        background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    td {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    th, td {
+        color: #fff;
+        text-align: left;
+    }
+
+    tr:nth-child(even) {
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+</style>
+
+<div class="center-content">
+    <p>Hello everyone and welcome to my website!</p>
+    <p>My name is Egor, and I am a professional drummer with over 15 years of stage performance experience and more than 10 years of teaching experience.</p>
+
+    <table>
+        <tr>
+            <th>Category</th>
+            <th>Details</th>
+        </tr>
+        <tr>
+            <td><strong>Education</strong></td>
+            <td>
+                <ul>
+                    <li><strong>Belarusian State University of Culture and Arts</strong>, Minsk<br>
+                        Bachelor of Arts (Variety Art), specialization - instrumental music (2013-2017)</li>
+                    <li><strong>Minsk State Musical College named after M.I. Glinka</strong>, Minsk<br>
+                        Diploma with Honors (2009-2013)<br>
+                        Specialization - Variety Art (instrumental music), drummer in symphony-jazz orchestra</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Achievements and Competitions</strong></td>
+            <td>
+                <ul>
+                    <li><strong>Winner of international competitions:</strong>
+                        <ul>
+                            <li>"DRUMSFEST" (International competition, Moscow, 2015)</li>
+                            <li>"Drum Day" (2nd degree, Vilnius, 2015)</li>
+                            <li>"Drum Beat" (International competition, Minsk, 2013)</li>
+                        </ul>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Performance Career</strong></td>
+            <td>
+                <ul>
+                    <li><strong>BEZ BILETA BAND</strong>, Minsk<br>
+                        Drummer (July 2013 - April 2018)<br>
+                        Performances in Belarus, Russia, Lithuania, Ukraine; solo concert "BEZ BILETA" at Minsk-Arena (February 14, 2015), final concert of the band at Minsk-Arena (December 12, 2019)</li>
+                    <li><strong>LITESOUND</strong>, Minsk<br>
+                        Drummer (2013-2014)</li>
+                    <li><strong>PROSSPECT</strong>, Minsk<br>
+                        Drummer (2011-2013)</li>
+                    <li><strong>NATALIA OREIRO</strong>, "UNFORGETTABLE TOUR 2019"<br>
+                        Drummer (2019)<br>
+                        Concerts at popular venues such as Crocus City Hall (Moscow, Russia), Sibur Arena (Saint Petersburg, Russia), Palace of the Republic (Minsk, Belarus), concert halls in Moldova, Armenia, and other countries</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td><strong>Participation in Musical Shows</strong></td>
+            <td>
+                <ul>
+                    <li><strong>SAMSHAZAM</strong>, Minsk<br>
+                        Participation in musical show (2019-2021)</li>
+                </ul>
+                <ul>
+                    <li><strong>Star Libra Cruise</strong><br>
+                        Participation in a musical shows (2012)</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+
+    <p>I am proud to share my musical journey and professional achievements with you on this website. Thank you for your interest, and I hope you find plenty of interesting content about the world of percussion instruments and music in general here.</p>
+</div>
+
 <%- include("partials/footer.ejs") %>

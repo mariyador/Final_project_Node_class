@@ -1,9 +1,32 @@
-<%- include("partials/head.ejs") %> <%- include("partials/header.ejs") %>
-<p>Phone:</p>
-<p>Email:</p>
-<p>Facebook:</p>
-<p>YouTube:</p>
-<p>Instagram:</p>
+<%- include("partials/head.ejs") %>
+<%- include("partials/header.ejs") %>
 
+<style>
+    .center-content {
+        background-color: rgba(0, 0, 0, 0.8);
+        text-align: center;
+        padding: 20px;
+        font-size: 20px; 
+        border-radius: 10px;
+        margin: 50px 50px; 
+    }
+
+    .center-content a {
+        color: #fff; 
+        text-decoration: none; 
+    }
+
+    .center-content a:hover {
+        text-decoration: underline; 
+    }
+</style>
+
+<div class="center-content">
+    <p><a href="tel:+19808757980">Phone: +1 (980) 875-7980</a></p>
+    <p><a href="https://www.facebook.com/egordoronkin15" target="_blank">My Facebook Page</a></p>
+    <p><a href="https://www.youtube.com/@EGORDORONKIN" target="_blank">My YouTube Channel</a></p>
+    <p><a href="https://www.instagram.com/egordoronkin/" target="_blank">My Instagram Profile</a></p>
+    <p><a href="mailto:egordoronkin5@gmail.com">If you have any further questions, you can send me an email.</a></p>
+</div>
 
 <%- include("partials/footer.ejs") %>
