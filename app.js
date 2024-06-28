@@ -86,16 +86,12 @@ app.use(passport.session());
 
 // Other middleware
 app.use((req, res, next) => {
-    // Генерация nonce для каждого запроса
     const nonce = crypto.randomBytes(16).toString('base64');
   
-    // Установка заголовка Content-Security-Policy
     res.setHeader('Content-Security-Policy', `script-src 'self' 'nonce-${nonce}'`);
   
-    // Передача nonce в объекте контекста при рендеринге шаблона
     res.locals.nonce = nonce;
   
-    // Передача управления следующему middleware или обработчику маршрута
     next();
   });
   
@@ -104,7 +100,6 @@ app.use((req, res, next) => {
       const students = await Student.find({ createdBy: req.user._id });
       res.render('students', { students });
     } catch (error) {
-      // Обработка ошибок, если требуется
       console.error(error);
       res.status(500).send('Internal Server Error');
     }
