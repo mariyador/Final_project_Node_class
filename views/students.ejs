@@ -129,6 +129,7 @@
 <script nonce="<%= nonce %>">
   document.addEventListener('DOMContentLoaded', function() {
     const students = <%- JSON.stringify(students) %>;
+    const csrfToken = '<%= _csrf %>';
     let ascending = true;
 
     const sortSelect = document.getElementById('sortSelect');
