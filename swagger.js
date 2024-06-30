@@ -5,7 +5,7 @@ const doc = {
         title: 'Students API for EgorD',
         description: 'Drum lessons info',
     },
-    host: 'students-api-doron.onrender.com', 
+    host: 'https://egordrums.onrender.com/', 
     schemes: ['https'],
     securityDefinitions: {
         Bearer: {
@@ -18,6 +18,6 @@ const doc = {
 };
 
 const outputFile = './swagger-output.json'; 
-const endpointsFiles = ['./routes/auth.js', './routes/students.js']; 
+const endpointsFiles = ['./routes/sessionRoutes.js', './routes/students.js', './routes/lessons.js','./routes/aboutRouter.js','./routes/contactRouter.js']; 
 
 swaggerAutogen(outputFile, endpointsFiles, doc);

@@ -14,7 +14,10 @@ const aboutRouter = require("./routes/aboutRouter");
 const contactRouter = require("./routes/contactRouter");
 const crypto = require('crypto');
 const nonce = crypto.randomBytes(16).toString('base64');
-const lessons = require('./routes/lessons'); // Import lessons routes
+const lessons = require('./routes/lessons');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
+
 
 
 const app = express();
@@ -116,12 +119,14 @@ app.use("/sessions", require("./routes/sessionRoutes"));
 app.use("/about", aboutRouter);
 app.use("/contact", contactRouter);
 app.use('/lessons', lessons);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 //Secret word handling
 const auth = require("./middleware/auth");
 
 //Students routes handling
 const studentsRouter = require("./routes/students");
+const swaggerAutogen = require("swagger-autogen");
 app.use("/", auth, studentsRouter);
 
 // Error handling

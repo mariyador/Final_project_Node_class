@@ -5,7 +5,7 @@
       "description": "Drum lessons info",
       "version": "1.0.0"
     },
-    "host": "students-api-doron.onrender.com",
+    "host": "egordrums.onrender.com",
     "basePath": "/api/v1",
     "schemes": ["https"],
     "securityDefinitions": {
@@ -17,7 +17,7 @@
       }
     },
     "paths": {
-      "/auth/register": {
+      "/sessions/register": {
         "post": {
           "description": "Register a new user",
           "parameters": [
@@ -54,7 +54,7 @@
           }
         }
       },
-      "/auth/login": {
+      "/sessions/logon": {
         "post": {
           "description": "Login a user",
           "parameters": [
@@ -115,6 +115,7 @@
                 "type": "object",
                 "properties": {
                   "name": { "type": "string", "maxLength": 40 },
+                  "age": { "type": "number"},
                   "educationLevel": { "type": "string", "enum": ["begginer", "intermediate", "advanced"] }
                 },
                 "required": ["name", "educationLeve"]
