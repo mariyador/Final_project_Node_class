@@ -1,0 +1,89 @@
+<%- include("partials/head.ejs") %>
+<%- include("partials/header.ejs") %>
+
+<style>
+  .container {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 20px;
+    color: white;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  input[type="text"],
+  input[type="date"],
+  input[type="time"],
+  textarea,
+  select,
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 5px;
+    color: white;
+  }
+
+  button[type="submit"] {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #555;
+  }
+</style>
+
+<div class="container">
+    <h2 class="text-center mt-4">New Lesson</h1>
+
+    <form action="/lessons" method="POST" class="mt-4">
+        <input type="hidden" name="_csrf" value="<%= _csrf %>">
+
+        <div class="mb-3">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text" id="title" name="title" class="form-control" required>
+        </div>
+        
+        <div class="mb-3">
+            <label for="description" class="form-label">Description:</label>
+            <textarea id="description" name="description" rows="4" class="form-control" required></textarea>
+        </div>
+        
+        <div class="mb-3">
+            <label for="date" class="form-label">Date:</label>
+            <input type="date" id="date" name="date" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="time" class="form-label">Time:</label>
+            <input type="time" id="time" name="time" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="student" class="form-label">Select Student:</label>
+            <select id="student" name="student" class="form-select" required>
+                <% students.forEach(function(student) { %>
+                    <option value="<%= student._id %>"><%= student.studentName %></option>
+                <% }); %>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Add Lesson</button>
+    </form>
+</div>
+
+<%- include("partials/footer.ejs") %>

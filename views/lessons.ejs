@@ -1,0 +1,98 @@
+<%- include("partials/head.ejs") %>
+<%- include("partials/header.ejs") %>
+
+<style>
+  .container {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .lesson-card {
+    width: 25%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    flex-shrink: 0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .lesson-card-info {
+    margin-bottom: 10px;
+  }
+
+  .lesson-card-info div {
+    margin-bottom: 5px;
+  }
+
+  .lesson-card-actions {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  .lesson-card-actions a,
+  .lesson-card-actions button {
+    text-decoration: none;
+    color: white;
+    padding: 8px 12px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid black;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  .lesson-card-actions button:hover {
+    background-color: #666;
+  }
+
+  #addButton {
+    margin-left: 20px;
+  }
+</style>
+
+<a href="/lessons/new" id="addButton">
+  <button type="button">Add a lesson</button>
+</a>
+
+<div class="container">
+  <% if (lessons && lessons.length) { %>
+    <% lessons.forEach((lesson) => { %>
+      <div class="lesson-card">
+        <div class="lesson-card-info">
+          <div><strong><%= lesson.title %></strong></div>
+          <div><%= lesson.description %></div>
+          <div>Date: <%= lesson.date.toDateString() %></div>
+          <div>Time: <%= lesson.time %></div>
+          <div>Student: <%= lesson.student.studentName %></div>
+        </div>
+        <% if (lesson.createdBy.toString() === user._id.toString()) { %>
+          <div class="lesson-card-actions">
+            <form action="/lessons/edit/<%= lesson._id %>" method="GET">
+              <button type="submit">Edit</button>
+            </form>
+            <form action="/lessons/delete/<%= lesson._id %>" method="POST">
+              <button type="submit">Delete</button>
+              <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+            </form>
+          </div>
+        <% } %>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <p>No lessons found.</p>
+  <% } %>
+</div>
+
+<%- include("partials/footer.ejs") %>

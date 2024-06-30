@@ -14,6 +14,7 @@ const aboutRouter = require("./routes/aboutRouter");
 const contactRouter = require("./routes/contactRouter");
 const crypto = require('crypto');
 const nonce = crypto.randomBytes(16).toString('base64');
+const lessons = require('./routes/lessons'); // Import lessons routes
 
 
 const app = express();
@@ -114,6 +115,7 @@ app.get("/", (req, res) => {
 app.use("/sessions", require("./routes/sessionRoutes"));
 app.use("/about", aboutRouter);
 app.use("/contact", contactRouter);
+app.use('/lessons', lessons);
 
 //Secret word handling
 const auth = require("./middleware/auth");

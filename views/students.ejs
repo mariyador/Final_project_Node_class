@@ -162,10 +162,12 @@
           <div class="student-card">
             <div class="student-card-image" style="background-image: url('/default.jpg')">
               <div class="student-card-actions">
-                <a href="/students/edit/${student.id}">More</a>
+                <form action="/students/edit/${student.id}" method="GET">
+                  <button type="submit">More</button>
+                </form>
                 <form action="/students/delete/${student.id}" method="POST">
                   <button type="submit">Delete</button>
-                  <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+                  <input type="hidden" name="_csrf" value="${csrfToken}" />
                 </form>
               </div>
             </div>
