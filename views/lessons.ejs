@@ -75,7 +75,11 @@
           <div><%= lesson.description %></div>
           <div>Date: <%= lesson.date.toDateString() %></div>
           <div>Time: <%= lesson.time %></div>
-          <div>Student: <%= lesson.student.studentName %></div>
+          <% if (lesson.student) { %>
+            <div>Student: <%= lesson.student.studentName %></div>
+          <% } else { %>
+            <div>Student: N/A</div>
+          <% } %>
         </div>
         <% if (lesson.createdBy.toString() === user._id.toString()) { %>
           <div class="lesson-card-actions">
